@@ -225,6 +225,17 @@ resource "aws_launch_configuration" "iac-as-launch-config" {
   security_groups      = [aws_security_group.allow_web_traffic_public.id]
   iam_instance_profile = aws_iam_instance_profile.s3-instance-prof.id
   user_data            = "IyEvYmluL2Jhc2gKYW1hem9uLWxpbnV4LWV4dHJhcyBpbnN0YWxsIG5naW54MQpzeXN0ZW1jdGwgZW5hYmxlIG5naW54CnN5c3RlbWN0bCBzdGFydCBuZ2lueApjcCAtUiAvdXNyL3NoYXJlL25naW54L2h0bWwgL3Vzci9zaGFyZS9uZ2lueC9pYWMtcHJvamVjdAphd3MgczMgY3AgczM6Ly9pYWMtcHJvamVjdC1uZ2lueC1jb25maWctZmlsZXMvaW5kZXguaHRtbCAvdXNyL3NoYXJlL25naW54L2lhYy1wcm9qZWN0L2luZGV4Lmh0bWwKYXdzIHMzIGNwIHMzOi8vaWFjLXByb2plY3QtbmdpbngtY29uZmlnLWZpbGVzL2FsdGFuLmpwZyAvdXNyL3NoYXJlL25naW54L2lhYy1wcm9qZWN0L2FsdGFuLmpwZwpzZWQgLWkgJ3MvdXNyXC9zaGFyZVwvbmdpbnhcL2h0bWwvdXNyXC9zaGFyZVwvbmdpbnhcL2lhYy1wcm9qZWN0LycgL2V0Yy9uZ2lueC9uZ2lueC5jb25mCnNlZCAtaSAicy9zdHJpbmdob3N0bmFtZXJlcGxhY2UvJChob3N0bmFtZSkvIiAvdXNyL3NoYXJlL25naW54L2lhYy1wcm9qZWN0L2luZGV4Lmh0bWwKc3lzdGVtY3RsIHJlbG9hZCBuZ2lueAo="
+  #the user_data value is a base64 hash of the startup scripts needed to copy our nginx data files from an S3 bucket. here is the script decoded for review
+  #   #!/bin/bash
+  #    amazon-linux-extras install nginx1
+  #    systemctl enable nginx
+  #    systemctl start nginx
+  #    cp -R /usr/share/nginx/html /usr/share/nginx/iac-project
+  #    aws s3 cp s3://iac-project-nginx-config-files/index.html /usr/share/nginx/iac-project/index.html
+  #    aws s3 cp s3://iac-project-nginx-config-files/altan.jpg /usr/share/nginx/iac-project/altan.jpg
+  #    sed -i 's/usr\/share\/nginx\/html/usr\/share\/nginx\/iac-project/' /etc/nginx/nginx.conf
+  #    sed -i "s/stringhostnamereplace/$(hostname)/" /usr/share/nginx/iac-project/index.html
+  #    systemctl reload nginx
 }
 
 
