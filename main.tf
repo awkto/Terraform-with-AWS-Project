@@ -144,7 +144,7 @@ resource "aws_s3_bucket" "iac-project-nginx-configfiles" {
 }
 
 # Upload webpage file to S3
-resource "aws_s3_object" "index.html" {
+resource "aws_s3_object" "indexhtml" {
   bucket = aws_s3_bucket.iac-project-nginx-configfiles.bucket
   key    = "index.html"
   source = "./index.html"
@@ -152,7 +152,7 @@ resource "aws_s3_object" "index.html" {
 }
 
 # Upload media file to S3
-resource "aws_s3_object" "altan.jpg" {
+resource "aws_s3_object" "altanjpg" {
   bucket = aws_s3_bucket.iac-project-nginx-configfiles.bucket
   key    = "altan.jpg"
   source = "./altan.jpg"
