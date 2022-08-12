@@ -190,8 +190,8 @@ EOF
 }
 
 //Allowing EC2 instance access to S3 bucket PART 2 - Create an IAM Instance Profile for EC2
-resource "aws_iam_instance_profile" "s3-instance-profile" {
-  name = "s3-instance-profile"
+resource "aws_iam_instance_profile" "s3-instance-prof" {
+  name = "s3-instance-prof"
   role = aws_iam_role.s3-iam-role.name
 }
 
@@ -223,7 +223,7 @@ resource "aws_launch_configuration" "iac-as-launch-config" {
   instance_type        = "t2.micro"
   key_name             = "altan-key-pair-tf"
   security_groups      = [aws_security_group.allow_web_traffic_public.id]
-  iam_instance_profile = aws_iam_instance_profile.s3-instance-profile.id
+  iam_instance_profile = aws_iam_instance_profile.s3-instance-prof.id
   user_data            = "IyEvYmluL2Jhc2gKYW1hem9uLWxpbnV4LWV4dHJhcyBpbnN0YWxsIG5naW54MQpzeXN0ZW1jdGwgZW5hYmxlIG5naW54CnN5c3RlbWN0bCBzdGFydCBuZ2lueApjcCAtUiAvdXNyL3NoYXJlL25naW54L2h0bWwgL3Vzci9zaGFyZS9uZ2lueC9pYWMtcHJvamVjdAphd3MgczMgY3AgczM6Ly9pYWMtcHJvamVjdC1uZ2lueC1jb25maWctZmlsZXMvaW5kZXguaHRtbCAvdXNyL3NoYXJlL25naW54L2lhYy1wcm9qZWN0L2luZGV4Lmh0bWwKYXdzIHMzIGNwIHMzOi8vaWFjLXByb2plY3QtbmdpbngtY29uZmlnLWZpbGVzL2FsdGFuLmpwZyAvdXNyL3NoYXJlL25naW54L2lhYy1wcm9qZWN0L2FsdGFuLmpwZwpzZWQgLWkgJ3MvdXNyXC9zaGFyZVwvbmdpbnhcL2h0bWwvdXNyXC9zaGFyZVwvbmdpbnhcL2lhYy1wcm9qZWN0LycgL2V0Yy9uZ2lueC9uZ2lueC5jb25mCnNlZCAtaSAicy9zdHJpbmdob3N0bmFtZXJlcGxhY2UvJGhvc3RuYW1lLyIgL3Vzci9zaGFyZS9uZ2lueC9pYWMtcHJvamVjdC9pbmRleC5odG1sCnN5c3RlbWN0bCByZWxvYWQgbmdpbngK"
 }
 
