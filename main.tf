@@ -125,18 +125,18 @@ resource "aws_security_group" "allow_ssh_public" {
   }
 }
 
-//Create S3 bucket for logs
-resource "aws_s3_bucket" "iac-project-logs" {
-  bucket = "iac-project-logs"
-  tags = {
-    Name        = "iac-project-logs"
-    Environment = "Dev"
-  }
-}
+# //Create S3 bucket for logs
+# resource "aws_s3_bucket" "iac-project-logs" {
+#   bucket_prefix = "iac-project-logs-"
+#   tags = {
+#     Name        = "iac-project-logs"
+#     Environment = "Dev"
+#   }
+# }
 
 //Create S3 bucket to source NGINX content
 resource "aws_s3_bucket" "iac-project-nginx-configfiles" {
-  bucket = "iac-project-nginx-configfiles"
+  bucket_prefix = "iac-project-nginx-configfiles-"
   tags = {
     Name        = "iac-project-nginx-configfiles"
     Environment = "Dev"
@@ -218,7 +218,7 @@ resource "aws_launch_configuration" "iac-as-launch-config" {
   image_id             = "ami-051dfed8f67f095f5"
   instance_type        = "t2.micro"
   key_name             = "altan-key-pair-tf"
-  security_groups      = [aws_security_group.allow_web_traffic_public.id, aws_security_group.allow_ssh_public.id]
+  security_groups      = [aws_security_group.allow_web_traffic_public.id]
   iam_instance_profile = aws_iam_instance_profile.s3-instance-profile.id
   user_data            = "IyEvYmluL2Jhc2gKYW1hem9uLWxpbnV4LWV4dHJhcyBpbnN0YWxsIG5naW54MQpzeXN0ZW1jdGwgZW5hYmxlIG5naW54CnN5c3RlbWN0bCBzdGFydCBuZ2lueApta2RpciAvaG9tZS9lYzItdXNlci93ZWJwYWdlCmNwIC1SIC91c3Ivc2hhcmUvbmdpbngvaHRtbCAvdXNyL3NoYXJlL25naW54L2lhYy1wcm9qZWN0CmF3cyBzMyBjcCBzMzovL2lhYy1wcm9qZWN0LW5naW54LWNvbmZpZ2ZpbGVzL2luZGV4Lmh0bWwgL3Vzci9zaGFyZS9uZ2lueC9pYWMtcHJvamVjdC9pbmRleC5odG1sCmF3cyBzMyBjcCBzMzovL2lhYy1wcm9qZWN0LW5naW54LWNvbmZpZ2ZpbGVzL2FsdGFuLmpwZyAvdXNyL3NoYXJlL25naW54L2lhYy1wcm9qZWN0L2FsdGFuLmpwZwpzeXN0ZW1jdGwgcmVsb2FkIG5naW54Cg=="
 }
@@ -241,7 +241,7 @@ resource "aws_autoscaling_group" "iac-as-autoscaling-group" {
   force_delete              = true
   placement_group           = aws_placement_group.iac-as-placement-group.id
   launch_configuration      = aws_launch_configuration.iac-as-launch-config.id
-  vpc_zone_identifier       = module.vpc.public_subnets
+  vpc_zone_identifier       = module.vpc.public_subnets  
 
 }
 
@@ -272,7 +272,7 @@ resource "aws_lb" "iac_loadbalancer" {
   load_balancer_type         = "application"
   security_groups            = [aws_security_group.allow_web_traffic_public.id]
   subnets                    = module.vpc.public_subnets
-  enable_deletion_protection = true
+  enable_deletion_protection = false
 
 }
 
@@ -296,8 +296,3 @@ resource "aws_lb_listener" "iac-lb-listener" {
   }
 }
 
-
-
-
-//TODO
-//Integrate ASG with ELB target group
