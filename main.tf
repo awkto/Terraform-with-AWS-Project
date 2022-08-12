@@ -136,7 +136,7 @@ resource "aws_security_group" "allow_ssh_public" {
 
 //Create S3 bucket to source NGINX content
 resource "aws_s3_bucket" "iac-project-nginx-configfiles" {
-  bucket_prefix = "iac-project-nginx-configfiles-"
+  bucket = "iac-project-nginx-configfiles"
   tags = {
     Name        = "iac-project-nginx-configfiles"
     Environment = "Dev"
@@ -241,7 +241,7 @@ resource "aws_autoscaling_group" "iac-as-autoscaling-group" {
   force_delete              = true
   placement_group           = aws_placement_group.iac-as-placement-group.id
   launch_configuration      = aws_launch_configuration.iac-as-launch-config.id
-  vpc_zone_identifier       = module.vpc.public_subnets  
+  vpc_zone_identifier       = module.vpc.public_subnets
 
 }
 
