@@ -139,17 +139,17 @@ resource "aws_security_group" "allow_ssh_public" {
 # }
 
 //Create S3 bucket to source NGINX content
-resource "aws_s3_bucket" "iac-project-nginx-configfiles" {
-  bucket = "iac-project-nginx-configfiles"
+resource "aws_s3_bucket" "iac-project-nginx-config-files" {
+  bucket = "iac-project-nginx-config-files"
   tags = {
-    Name        = "iac-project-nginx-configfiles"
+    Name        = "iac-project-nginx-config-files"
     Environment = "Dev"
   }
 }
 
 # Upload webpage file to S3
 resource "aws_s3_object" "indexhtml" {
-  bucket = aws_s3_bucket.iac-project-nginx-configfiles.bucket
+  bucket = aws_s3_bucket.iac-project-nginx-config-files.bucket
   key    = "index.html"
   source = "./index.html"
   #source_hash = filemd5(local.object_source)
@@ -157,7 +157,7 @@ resource "aws_s3_object" "indexhtml" {
 
 # Upload media file to S3
 resource "aws_s3_object" "altanjpg" {
-  bucket = aws_s3_bucket.iac-project-nginx-configfiles.bucket
+  bucket = aws_s3_bucket.iac-project-nginx-config-files.bucket
   key    = "altan.jpg"
   source = "./altan.jpg"
   #source_hash = filemd5(local.object_source)
@@ -224,7 +224,7 @@ resource "aws_launch_configuration" "iac-as-launch-config" {
   key_name             = "altan-key-pair-tf"
   security_groups      = [aws_security_group.allow_web_traffic_public.id]
   iam_instance_profile = aws_iam_instance_profile.s3-instance-profile.id
-  user_data            = "IyEvYmluL2Jhc2gKYW1hem9uLWxpbnV4LWV4dHJhcyBpbnN0YWxsIG5naW54MQpzeXN0ZW1jdGwgZW5hYmxlIG5naW54CnN5c3RlbWN0bCBzdGFydCBuZ2lueApjcCAtUiAvdXNyL3NoYXJlL25naW54L2h0bWwgL3Vzci9zaGFyZS9uZ2lueC9pYWMtcHJvamVjdAphd3MgczMgY3AgczM6Ly9pYWMtcHJvamVjdC1uZ2lueC1jb25maWdmaWxlcy9pbmRleC5odG1sIC91c3Ivc2hhcmUvbmdpbngvaWFjLXByb2plY3QvaW5kZXguaHRtbAphd3MgczMgY3AgczM6Ly9pYWMtcHJvamVjdC1uZ2lueC1jb25maWdmaWxlcy9hbHRhbi5qcGcgL3Vzci9zaGFyZS9uZ2lueC9pYWMtcHJvamVjdC9hbHRhbi5qcGcKc2VkIC1pICdzL3Vzclwvc2hhcmVcL25naW54XC9odG1sL3Vzclwvc2hhcmVcL25naW54XC9pYWMtcHJvamVjdC8nIC9ldGMvbmdpbngvbmdpbnguY29uZgpzZWQgLWkgInMvc3RyaW5naG9zdG5hbWVyZXBsYWNlLyRob3N0bmFtZS8iIC91c3Ivc2hhcmUvbmdpbngvaWFjLXByb2plY3QvaW5kZXguaHRtbApzeXN0ZW1jdGwgcmVsb2FkIG5naW54Cg=="
+  user_data            = "IyEvYmluL2Jhc2gKYW1hem9uLWxpbnV4LWV4dHJhcyBpbnN0YWxsIG5naW54MQpzeXN0ZW1jdGwgZW5hYmxlIG5naW54CnN5c3RlbWN0bCBzdGFydCBuZ2lueApjcCAtUiAvdXNyL3NoYXJlL25naW54L2h0bWwgL3Vzci9zaGFyZS9uZ2lueC9pYWMtcHJvamVjdAphd3MgczMgY3AgczM6Ly9pYWMtcHJvamVjdC1uZ2lueC1jb25maWctZmlsZXMvaW5kZXguaHRtbCAvdXNyL3NoYXJlL25naW54L2lhYy1wcm9qZWN0L2luZGV4Lmh0bWwKYXdzIHMzIGNwIHMzOi8vaWFjLXByb2plY3QtbmdpbngtY29uZmlnLWZpbGVzL2FsdGFuLmpwZyAvdXNyL3NoYXJlL25naW54L2lhYy1wcm9qZWN0L2FsdGFuLmpwZwpzZWQgLWkgJ3MvdXNyXC9zaGFyZVwvbmdpbnhcL2h0bWwvdXNyXC9zaGFyZVwvbmdpbnhcL2lhYy1wcm9qZWN0LycgL2V0Yy9uZ2lueC9uZ2lueC5jb25mCnNlZCAtaSAicy9zdHJpbmdob3N0bmFtZXJlcGxhY2UvJGhvc3RuYW1lLyIgL3Vzci9zaGFyZS9uZ2lueC9pYWMtcHJvamVjdC9pbmRleC5odG1sCnN5c3RlbWN0bCByZWxvYWQgbmdpbngK"
 }
 
 
@@ -246,7 +246,7 @@ resource "aws_autoscaling_group" "iac-as-autoscaling-group" {
   placement_group           = aws_placement_group.iac-as-placement-group.id
   launch_configuration      = aws_launch_configuration.iac-as-launch-config.id
   vpc_zone_identifier       = module.vpc.public_subnets
-  depends_on                = [aws_s3_bucket.iac-project-nginx-configfiles]
+  depends_on                = [aws_s3_bucket.iac-project-nginx-config-files]
   target_group_arns         = [aws_lb_target_group.iac-lb-target-group.arn]
   # load_balancers = aws_lb.iac_loadbalancer
 }
