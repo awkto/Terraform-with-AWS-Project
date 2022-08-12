@@ -7,6 +7,10 @@ terraform {
   }
 }
 
+provider "aws" {
+    region = "us-east-2"
+}
+
 // Create a VPC to use for the rest of our resources
 module "vpc" {
   source          = "terraform-aws-modules/vpc/aws"
