@@ -242,9 +242,9 @@ resource "aws_autoscaling_group" "iac-as-autoscaling-group" {
   placement_group           = aws_placement_group.iac-as-placement-group.id
   launch_configuration      = aws_launch_configuration.iac-as-launch-config.id
   vpc_zone_identifier       = module.vpc.public_subnets
-  target_group_arns = [aws_lb_target_group.iac-lb-target-group.arn]
+  depends_on                = [aws_s3_bucket.iac-project-nginx-configfiles]
+  target_group_arns         = [aws_lb_target_group.iac-lb-target-group.arn]
   # load_balancers = aws_lb.iac_loadbalancer
-
 }
 
 // Autoscaling Group Part 4 - Create an increment policy
