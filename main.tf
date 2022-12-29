@@ -27,9 +27,9 @@ module "vpc" {
 
 
 // Import a key pair from my current desktop environment
-resource "aws_key_pair" "altan-key-pair-tf" {
-  key_name   = "altan-key-pair-tf"
-  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDY034aIVS9Rz4fQdLNscfyNJTlKuCLP1X2K4mY6W6BZshhWUPdnjnu+vhEC5uU2bVT4lHE/Ry0g14+xfJzsq0xa80+EW6sqMgECmmO+bqRqnmbht6dXwXHaI4cjnCPhH+j2uYxO9cv+mHedKYT61YtNkY5fTrrgr8vAFS2BzdXWgNU/MESpE7UlhOpR8VtfLKyoJARFs4pC6lMFw4QThJd/fDjxyypZAOmsgu6OxSj7NXgDvbv7kAo8+FLlcjxh+MwRThPTOu++pSU8/4JJIh7oJj0Lt7Yx2X7jyBdBBSRRsxdDRiG4+b9nYsoDZhA2Na+jbwpyMYOMwwDPoNy7N1v madato@orca"
+resource "aws_key_pair" "awkto-key-pair-tf" {
+  key_name   = "awkto-key-pair-tf"
+  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDY034aIVS9Rz4fQdLNscfyNJTlKuCLP1X2K4mY6W6BZshhWUPdnjnu+vhEC5uU2bVT4lHE/Ry0g14+xfJzsq0xa80+EW6sqMgECmmO+bqRqnmbht6dXwXHaI4cjnCPhH+j2uYxO9cv+mHedKYT61YtNkY5fTrrgr8vAFS2BzdXWgNU/MESpE7UlhOpR8VtfLKyoJARFs4pC6lMFw4QThJd/fDjxyypZAOmsgu6OxSj7NXgDvbv7kAo8+FLlcjxh+MwRThPTOu++pSU8/4JJIh7oJj0Lt7Yx2X7jyBdBBSRRsxdDRiG4+b9nYsoDZhA2Na+jbwpyMYOMwwDPoNy7N1v awkto@orca"
 }
 
 
